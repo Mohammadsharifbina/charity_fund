@@ -6,6 +6,7 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\Entery;
 use App\Http\Controllers\EnteryController;
+use App\Http\Controllers\withdrawController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,5 +23,7 @@ route::get("/memberInfo/{id}",[GeneralController::class,"memberInfo"]);
 
 route::resource("/Entery",EnteryController::class);
 
+
+route::resource("/withdraw",withdrawController::class);
 
 //user route

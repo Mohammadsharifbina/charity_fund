@@ -92,13 +92,14 @@
 
                 <td>
                     <a href="{{ url()->current() }}?edit={{ $payment->id }}">
-                        <i class="fa-solid fa-pen"></i>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
                     </a>
                 </td>
 
                 <td>
-                    <form action="/Entery/{{ $payment->id }}" method="POST"
-                        onsubmit="return confirm('ایا ته ډاډه یې چې دا ریکارډ حذف کړې؟');">
+                    <form action="/Entery/{{ $payment->id }}" method="POST" class="delete-form">
 
                         @csrf
                         @method('get')
@@ -178,5 +179,108 @@
     object-fit: cover;
 }
 </style>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+.delete-confirm-popup {
+    border-radius: 20px !important;
+    padding: 25px 20px 18px !important;
+    font-family: Arial, sans-serif;
+    direction: rtl;
+}
+
+.delete-confirm-title {
+    font-size: 23px !important;
+    font-weight: 700 !important;
+    color: #172033 !important;
+    margin-top: 12px !important;
+}
+
+.delete-confirm-text {
+    font-size: 16px !important;
+    line-height: 1.8 !important;
+    color: #778197 !important;
+}
+
+.delete-confirm-btn {
+    border-radius: 12px !important;
+    padding: 15px 22px !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    box-shadow: none !important;
+}
+
+.delete-cancel-btn {
+    background: #e5e7eb !important;
+    color: #374151 !important;
+}
+
+.delete-confirm-btn-red {
+    background: #e52525 !important;
+    color: white !important;
+}
+
+.delete-confirm-btn-red:hover {
+    background: #c91d1d !important;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    document.querySelectorAll('.delete-form').forEach(function(form) {
+
+        form.addEventListener('submit', function(event) {
+            if (form.dataset.confirmed === 'true') {
+                return;
+            }
+
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'ایا ډاډه یې؟',
+                text: 'ایا غواړې دا ریکارډ حذف کړې؟ دا عمل بېرته نه شي راګرځېدای!',
+                icon: 'warning',
+
+                iconColor: '#ff2424',
+                background: '#ffffff',
+                width: 420,
+                padding: '25px 20px',
+
+                showCancelButton: true,
+                reverseButtons: false,
+                focusCancel: true,
+
+                confirmButtonText: 'هو، حذف یې کړه',
+                cancelButtonText: 'نه، لغوه کړه',
+
+                buttonsStyling: false,
+                customClass: {
+                    popup: 'delete-confirm-popup',
+                    title: 'delete-confirm-title',
+                    htmlContainer: 'delete-confirm-text',
+                    confirmButton: 'delete-confirm-btn delete-confirm-btn-red',
+                    cancelButton: 'delete-confirm-btn delete-cancel-btn',
+                    actions: 'delete-confirm-actions'
+                },
+
+                showClass: {
+                    popup: 'swal2-show'
+                }
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    form.dataset.confirmed = 'true';
+                    form.requestSubmit();
+                }
+            });
+        });
+
+    });
+
+});
+</script>
 
 @endsection

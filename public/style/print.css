@@ -1,4 +1,5 @@
 @media print {
+
     /* Hide everything on the page, including layout.master */
     body * {
         visibility: hidden !important;
@@ -25,6 +26,8 @@
     .actions,
     .topbar .btn {
         display: none !important;
+        background-color: #111827;
+        ;
     }
 
     /* Make sure the account content fits on paper */

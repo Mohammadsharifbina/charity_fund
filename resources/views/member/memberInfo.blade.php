@@ -411,6 +411,7 @@
                     {{ ucfirst($user->status ?? 'Active') }}
                 </span>
 
+
                 <div class="profile-meta">
                     <span>
                         <i class="fa-solid fa-id-card"></i>
@@ -425,6 +426,9 @@
                     <span>
                         <i class="fa-solid fa-envelope"></i>
                         {{ $user->email ?? 'Not provided' }}
+                    </span>
+                    <span>
+                        <a href="/withdraw/{{ $user->id }}">send Mony</a>
                     </span>
                 </div>
             </div>

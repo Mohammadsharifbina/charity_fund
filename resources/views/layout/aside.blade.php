@@ -5,7 +5,7 @@
         <a href="/dashboard" class="active">▦ <span>Dashboard</span></a>
         <a href="/member">🛍 <span>Members</span></a>
         <a href="/Entery">▣ <span>Payment</span></a>
-        <a href="#">▣ <span>withdraw</span></a>
+        <a href="/withdraw">▣ <span>withdraw</span></a>
         <a href="#">✉ <span>messages</span><b
                 style="margin-left:auto;background:#4f46e5;padding:2px 6px;border-radius:9px;font-size:10px">3</b></a>
         <a href="#" data-page="support">🎫 <span>Support</span></a>

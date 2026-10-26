@@ -305,7 +305,7 @@ button {
 .btn {
     padding: 10px 15px;
     border-radius: 8px;
-    background: var(--primary);
+    background: #111827;
     color: #fff;
     font-weight: 600
 }

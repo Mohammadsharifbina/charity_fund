@@ -10,4 +10,7 @@ class Member extends Model
     {
         return $this->hasMany(Entery::class);
     }
+    public function withdraw(){
+        return $this->hasMany(Withdraw::class);
+    }
 }
