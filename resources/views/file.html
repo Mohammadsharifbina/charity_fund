@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f2f8;
+            padding: 30px 15px;
+            color: #292333;
+        }
+
+        .form-container {
+            max-width: 750px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-header {
+            margin-bottom: 25px;
+        }
+
+        .form-header h2 {
+            color: #3b1e54;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group>label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #d8d2df;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+            background: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #6d3a91;
+            box-shadow: 0 0 0 3px #6d3a9120;
+        }
+
+        .form-group input[type="file"] {
+            padding: 10px;
+            background: #faf9fc;
+        }
+
+        .form-group input[type="file"]::file-selector-button {
+            padding: 8px 12px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #eee5f6;
+            color: #3b1e54;
+            cursor: pointer;
+        }
+
+        .help-text {
+            color: #777;
+            font-size: 12px;
+        }
+
+        /* Image preview */
+        .image-preview {
+            display: none;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            margin-top: 5px;
+        }
+
+        /* Status toggle */
+        .status-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 16px;
+            background: #faf9fc;
+            border: 1px solid #e5e0eb;
+            border-radius: 10px;
+        }
+
+        .status-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .status-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: #16a34a;
+        }
+
+        .status-text.inactive {
+            color: #dc2626;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .toggle-switch input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            background: #a3a3a3;
+            transition: background 0.25s;
+        }
+
+        .toggle-slider::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 4px;
+            left: 4px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 1px 3px #0002;
+            transition: transform 0.25s;
+        }
+
+        .toggle-switch input:checked+.toggle-slider {
+            background: #16a34a;
+        }
+
+        .toggle-switch input:checked+.toggle-slider::before {
+            transform: translateX(22px);
+        }
+
+        .toggle-switch input:focus-visible+.toggle-slider {
+            outline: 3px solid #b99bd0;
+            outline-offset: 3px;
+        }
+
+        /* Buttons */
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b1e54, #8051a0);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary {
+            background: #eee9f3;
+            color: #3b1e54;
+        }
+
+        .btn:hover {
+            opacity: 0.88;
+        }
+
+        /* Responsive */
+        @media (max-width: 520px) {
+            body {
+                padding: 10px;
+            }
+
+            .form-container {
+                padding: 20px 16px;
+                margin: 10px auto;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 17px;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="form-container">
+
+        <header class="form-header">
+            <h2>Add New Student</h2>
+            <p>Enter the student's information below.</p>
+        </header>
+
+        <form id="studentForm">
+
+            <div class="form-grid">
+
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="name">
+                        First Name <span class="required">*</span>
+                    </label>
+                    <input type="text" id="name" name="name" placeholder="Enter first name" autocomplete="given-name"
+                        required>
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="last_name">
+                        Last Name <span class="required">*</span>
+                    </label>
+                    <input type="text" id="last_name" name="last_name" placeholder="Enter last name"
+                        autocomplete="family-name" required>
+                </div>
+
+                <!-- Image -->
+                <div class="form-group full-width">
+                    <label for="image">
+                        Profile Image <span class="required">*</span>
+                    </label>
+                    <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp" required>
+                    <span class="help-text">
+                        JPG, PNG or WebP; maximum 2 MB.
+                    </span>
+                    <img id="preview" class="image-preview" alt="Image preview">
+                </div>
+
+                <!-- Phone -->
+                <div class="form-group full-width">
+                    <label for="phone">
+                        Phone Number <span class="required">*</span>
+                    </label>
+                    <input type="tel" id="phone" name="phone" placeholder="e.g. +93700000000" autocomplete="tel"
+                        maxlength="20" required>
+                </div>
+
+                <!-- Status -->
+                <div class="form-group full-width">
+                    <label>Student Status</label>
+
+                    <div class="status-box">
+                        <div class="status-info">
+                            <span class="status-title">Account Status</span>
+                            <span id="statusText" class="status-text">
+                                Active
+                            </span>
+                        </div>
+
+                        <label class="toggle-switch" for="status">
+                            <input type="checkbox" id="status" name="status" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <button type="reset" class="btn btn-secondary">
+                    Reset
+                </button>
+
+                <button type="submit" class="btn btn-primary">
+                    Save Student
+                </button>
+            </div>
+
+        </form>
+    </main>
+
+    <script>
+        // Image preview
+        const imageInput = document.getElementById('image');
+        const preview = document.getElementById('preview');
+        let previewURL = null;
+
+        imageInput.addEventListener('change', function () {
+            const file = this.files[0];
+
+            if (previewURL) {
+                URL.revokeObjectURL(previewURL);
+                previewURL = null;
+            }
+
+            if (!file) {
+                preview.removeAttribute('src');
+                preview.style.display = 'none';
+                return;
+            }
+
+            const allowedTypes = [
+                'image/jpeg',
+                'image/png',
+                'image/webp'
+            ];
+
+            if (!allowedTypes.includes(file.type)) {
+                alert('Please select a JPG, PNG, or WebP image.');
+                this.value = '';
+                preview.style.display = 'none';
+                return;
+            }
+
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Image size must not exceed 2 MB.');
+                this.value = '';
+                preview.style.display = 'none';
+                return;
+            }
+
+            previewURL = URL.createObjectURL(file);
+            preview.src = previewURL;
+            preview.style.display = 'block';
+        });
+
+        // Toggle status
+        const statusToggle = document.getElementById('status');
+        const statusText = document.getElementById('statusText');
+
+        function updateStatus() {
+            if (statusToggle.checked) {
+                statusText.textContent = 'Active';
+                statusText.classList.remove('inactive');
+            } else {
+                statusText.textContent = 'Inactive';
+                statusText.classList.add('inactive');
+            }
+        }
+
+        statusToggle.addEventListener('change', updateStatus);
+
+        // Reset form
+        document.getElementById('studentForm').addEventListener('reset', () => {
+            setTimeout(() => {
+                updateStatus();
+
+                if (previewURL) {
+                    URL.revokeObjectURL(previewURL);
+                    previewURL = null;
+                }
+
+                preview.removeAttribute('src');
+                preview.style.display = 'none';
+            }, 0);
+        });
+
+        // Front-end demonstration only
+        document.getElementById('studentForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            alert('Form validated successfully! No data has been saved.');
+        });
+
+        updateStatus();
+    </script>
+
+</body>
+
+</html>

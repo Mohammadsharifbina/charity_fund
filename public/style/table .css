@@ -1,0 +1,54 @@
+ .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #3b1e54;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            white-space: nowrap;
+        }
+
+        th {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        td {
+            font-size: 14px;
+            color: #333;
+        }
+
+        tbody tr:hover {
+            background: #f5f0fa;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 12px;
+            }
+        }

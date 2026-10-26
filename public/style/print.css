@@ -1,0 +1,48 @@
+@media print {
+    /* Hide everything on the page, including layout.master */
+    body * {
+        visibility: hidden !important;
+    }
+
+    /* Show only the account information */
+    #printArea,
+    #printArea * {
+        visibility: visible !important;
+    }
+
+    /* Position the printable section */
+    #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 10px;
+        background: white;
+    }
+
+    /* Hide buttons and navigation */
+    .actions,
+    .topbar .btn {
+        display: none !important;
+    }
+
+    /* Make sure the account content fits on paper */
+    .content-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .panel,
+    .profile,
+    .stat-card {
+        break-inside: avoid;
+    }
+
+    body {
+        background: white !important;
+    }
+
+    @page {
+        margin: 10mm;
+    }
+}
