@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Member;
+use App\Models\Entery;
+use App\Models\Withdraw;
+use Carbon\Carbon;
 
 class GeneralController extends Controller
 {
@@ -19,8 +22,14 @@ class GeneralController extends Controller
     }
     public function memberInfo($id){
         $user=Member::find($id);
-        // return $user;
-        return view("/member.memberInfo",compact("user"));
+        $totalAmount=Entery::where('member_id',$id)->sum('amount');
+       $thisMonth = Entery::where('member_id', $id)
+    ->whereMonth('created_at', now()->month)
+    ->whereYear('created_at', now()->year)
+    ->sum('amount');;
+        $Deposit=Withdraw::where('member_id',$id)->sum('amount');
+    
+        return view("/member.memberInfo",compact("user","totalAmount" ,"Deposit","thisMonth"));
     }
     
     

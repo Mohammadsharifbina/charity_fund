@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ asset("style/form.css") }}">
     <link rel="stylesheet" href="{{ asset("style/print.css") }}">
     <link rel="stylesheet" href="{{ asset("style/table.css") }}">
+    <link rel="stylesheet" href="{{ asset("style/profile.css") }}">
     <link rel="stylesheet" href="{{ asset("style/fontawesome-free-6.4.0-web/css/all.css") }}">
 
     <script>
